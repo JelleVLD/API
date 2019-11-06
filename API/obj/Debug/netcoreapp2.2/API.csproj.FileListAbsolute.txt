@@ -1,0 +1,16 @@
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\appsettings.Development.json
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\appsettings.json
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\API.deps.json
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\API.runtimeconfig.json
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\API.runtimeconfig.dev.json
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\API.dll
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.csprojAssemblyReference.cache
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.RazorAssemblyInfo.cache
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.RazorAssemblyInfo.cs
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.AssemblyInfoInputs.cache
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.AssemblyInfo.cs
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.RazorTargetAssemblyInfo.cache
+C:\3 ITF\Angular\API\API\bin\Debug\netcoreapp2.2\API.pdb
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.dll
+C:\3 ITF\Angular\API\API\obj\Debug\netcoreapp2.2\API.pdb
