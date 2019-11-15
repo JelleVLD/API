@@ -10,8 +10,8 @@ namespace API.Models
     {
         [Key]
         public long antwoordID { get; set; }
-        public DateTime antwoord{ get; set; }
-        public long pollID { get; set; }
-
+        public string antwoord{ get; set; }
+        public long? pollID { get; set; }
+        public ICollection<Stem> stemmen { get; set; }
     }
 }

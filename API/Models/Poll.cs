@@ -11,6 +11,7 @@ namespace API.Models
         [Key]
         public long pollID { get; set; }
         public string naam { get; set; }
+        public ICollection<Antwoord> antwoorden { get; set; }
 
     }
 }

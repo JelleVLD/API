@@ -29,16 +29,16 @@ namespace API.Controllers
 
         // GET: api/PollGebruiker/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PollGebruiker>> GetPollGebruiker(long id)
+        public async Task<ActionResult<IEnumerable<PollGebruiker>>> GetPollGebruiker(long id)
         {
-            var pollGebruiker = await _context.PollGebruikers.FindAsync(id);
+            var pollGebruikers = await _context.PollGebruikers.Include(g => g.gebruiker).Include(p => p.poll).Where(i => i.gebruikerID == id).ToListAsync();
 
-            if (pollGebruiker == null)
+            if (pollGebruikers == null)
             {
                 return NotFound();
             }
 
-            return pollGebruiker;
+            return pollGebruikers;
         }
 
         // PUT: api/PollGebruiker/5

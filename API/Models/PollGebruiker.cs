@@ -12,6 +12,7 @@ namespace API.Models
         public long polGebruikerID { get; set; }
         public long pollID { get; set; }
         public long gebruikerID{ get; set; }
+        public bool hasCreated { get; set; }
 
         public Gebruiker gebruiker { get; set; }
         public Poll poll { get; set; }

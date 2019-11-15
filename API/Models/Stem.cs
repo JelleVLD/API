@@ -12,5 +12,6 @@ namespace API.Models
         public long stemID { get; set; }
         public long antwoordID { get; set; }
         public long gebruikerID { get; set; }
+        public Gebruiker gebruiker { get; set; }
     }
 }

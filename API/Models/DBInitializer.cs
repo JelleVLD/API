@@ -47,6 +47,8 @@ namespace API.Models
                                 new Poll { naam="Vat" }
                                 );
             }
+            context.SaveChanges();
+
             if (context.PollGebruikers.Any())
             {
                 return;
@@ -54,10 +56,11 @@ namespace API.Models
             else
             {
                 context.PollGebruikers.AddRange(
-                                new PollGebruiker { pollID = 1 ,gebruikerID = 2},
-                                new PollGebruiker { pollID = 2 ,gebruikerID = 1}
+                                new PollGebruiker { pollID = 1 ,gebruikerID = 2,hasCreated=true},
+                                new PollGebruiker { pollID = 2 ,gebruikerID = 1,hasCreated=true}
                                 );
             }
+
             if (context.Antwoorden.Any())
             {
                 return;
@@ -65,8 +68,8 @@ namespace API.Models
             else
             {
                 context.Antwoorden.AddRange(
-                                new Antwoord { antwoord = new DateTime(2019,12,13), pollID=1},
-                                new Antwoord { antwoord = new DateTime(2020,1,1),pollID=2}
+                                new Antwoord { antwoord = "13/11", pollID=1},
+                                new Antwoord { antwoord = "1/1",pollID=2}
                                 );
             }
             if (context.Stemmen.Any())

@@ -32,7 +32,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Poll>> GetPoll(long id)
         {
-            var poll = await _context.Polls.FindAsync(id);
+            var poll = await _context.Polls.Include(a => a.antwoorden).ThenInclude(s=>s.stemmen).Where(p => p.pollID == id).FirstAsync();
 
             if (poll == null)
             {
