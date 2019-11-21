@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Mail;
+using System.Net;
 
 namespace API.Controllers
 {
@@ -22,7 +23,36 @@ namespace API.Controllers
             _context = context;
             _gebruikerService = gebruikerService; 
         }
-    [HttpPost("authenticate")] 
+
+        [Authorize]
+        [HttpPost]
+        [Route("stuurmail")]
+        public  void SendEmail(Email email)
+        {
+            MailAddress to = new MailAddress(email.email);
+            MailAddress from = new MailAddress("uitnodiging@PollAppster.com");
+
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = email.subject;
+            message.Body = email.message;
+            message.IsBodyHtml = true;
+
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("90ff9dd166282d", "da28a388fdd5dd"),
+                EnableSsl = true
+            };
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        [HttpPost("authenticate")] 
         public IActionResult Authenticate([FromBody]Gebruiker userParam) 
         { 
             var gebruiker = _gebruikerService.Authenticate(userParam.gebruikersnaam, userParam.wachtwoord);
