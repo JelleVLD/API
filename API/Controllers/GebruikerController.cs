@@ -23,7 +23,7 @@ namespace API.Controllers
             _context = context;
             _gebruikerService = gebruikerService; 
         }
-
+        //stuurt een mail naar het meegegeven mailadres
         [Authorize]
         [HttpPost]
         [Route("stuurmail")]
@@ -52,6 +52,7 @@ namespace API.Controllers
                 Console.WriteLine(ex.ToString());
             }
         }
+        //identificeert of er met de meegegeven login een gebruiker bestaat
         [HttpPost("authenticate")] 
         public IActionResult Authenticate([FromBody]Gebruiker userParam) 
         { 
@@ -60,14 +61,15 @@ namespace API.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
             return Ok(gebruiker);
         }
-        // GET: api/Gebruiker
+        // haalt alle gebruikers op
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Gebruiker>>> GetGebruikers()
         {
             return await _context.Gebruikers.ToListAsync();
         }
-        // GET: api/Gebruiker/5
+        //haalt de gebruiker op met de meegegeven id
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Gebruiker>> GetGebruiker(long id)
         {
@@ -80,7 +82,7 @@ namespace API.Controllers
 
             return gebruiker;
         }
-        // PUT: api/Gebruiker/5
+        // past de gebruiker aan met het meegegeven id
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGebruiker(long id, Gebruiker gebruiker)
@@ -110,7 +112,8 @@ namespace API.Controllers
 
             return NoContent();
         }
-        // POST: api/Gebruiker
+        //voegt een nieuwe gebruiker toe
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Gebruiker>> PostGebruiker(Gebruiker gebruiker)
         {
@@ -120,7 +123,7 @@ namespace API.Controllers
             return CreatedAtAction("GetGebruiker", new { id = gebruiker.gebruikerID }, gebruiker);
         }
 
-        // DELETE: api/Antwoord/5
+        // delete de gebruiker van het meegegeven id
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Gebruiker>> DeleteGebruiker(long id)
@@ -136,6 +139,7 @@ namespace API.Controllers
 
             return gebruiker;
         }
+        //controleert of de meegegeven gebruikerid bestaat in de database
 
         private bool GebruikerExists(long id)
         {

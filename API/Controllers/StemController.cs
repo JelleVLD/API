@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -20,14 +21,16 @@ namespace API.Controllers
             _context = context;
         }
 
-        // GET: api/Stem
+        // haalt alle stemmen op 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Stem>>> GetStemmen()
         {
             return await _context.Stemmen.ToListAsync();
         }
 
-        // GET: api/Stem/5
+        //haalt de stem op met de meegegeven id
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Stem>> GetStem(long id)
         {
@@ -41,7 +44,8 @@ namespace API.Controllers
             return stem;
         }
 
-        // PUT: api/Stem/5
+        // past de stem aan met het meegegeven id
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStem(long id, Stem stem)
         {
@@ -71,7 +75,8 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Stem
+        //voegt een nieuwe stem toe
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Stem>> PostStem(Stem stem)
         {
@@ -81,7 +86,8 @@ namespace API.Controllers
             return CreatedAtAction("GetStem", new { id = stem.stemID }, stem);
         }
 
-        // DELETE: api/Stem/5
+        // delete de stem van het meegegeven id
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Stem>> DeleteStem(long id)
         {
@@ -96,7 +102,7 @@ namespace API.Controllers
 
             return stem;
         }
-
+        //controleert of de meegegeven stemid bestaat in de database
         private bool StemExists(long id)
         {
             return _context.Stemmen.Any(e => e.stemID == id);

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -20,14 +21,16 @@ namespace API.Controllers
             _context = context;
         }
 
-        // GET: api/Antwoord
+        // haalt alle antwoorden op 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Antwoord>>> GetAntwoorden()
         {
             return await _context.Antwoorden.ToListAsync();
         }
 
-        // GET: api/Antwoord/5
+        //haalt de stem op met de meegegeven id
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Antwoord>> GetAntwoord(long id)
         {
@@ -41,7 +44,8 @@ namespace API.Controllers
             return antwoord;
         }
 
-        // PUT: api/Antwoord/5
+        // past het antwoord aan met het meegegeven id
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAntwoord(long id, Antwoord antwoord)
         {
@@ -71,7 +75,8 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Antwoord
+        //voegt een nieuw antwoord toe
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Antwoord>> PostAntwoord(Antwoord antwoord)
         {
@@ -81,7 +86,8 @@ namespace API.Controllers
             return CreatedAtAction("GetAntwoord", new { id = antwoord.antwoordID }, antwoord);
         }
 
-        // DELETE: api/Antwoord/5
+        // delete het antwoord van het meegegeven id
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Antwoord>> DeleteAntwoord(long id)
         {
@@ -96,6 +102,7 @@ namespace API.Controllers
 
             return antwoord;
         }
+        //controleert of de meegegeven antwoordid bestaat in de database
 
         private bool AntwoordExists(long id)
         {

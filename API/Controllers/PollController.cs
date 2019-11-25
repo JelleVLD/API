@@ -20,15 +20,16 @@ namespace API.Controllers
         {
             _context = context;
         }
-
-       [Authorize]
+        // haalt alle polls op 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Poll>>> GetPolls()
         {
             return await _context.Polls.ToListAsync();
         }
 
-        // GET: api/Poll/5
+        //haalt de poll met alle antwoorden en stemmen op met de meegegeven id
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Poll>> GetPoll(long id)
         {
@@ -42,7 +43,8 @@ namespace API.Controllers
             return poll;
         }
 
-        // PUT: api/Poll/5
+        // past de poll aan met het meegegeven id
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPoll(long id, Poll poll)
         {
@@ -72,7 +74,8 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Poll
+        //voegt een nieuwe poll toe
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Poll>> PostPoll(Poll poll)
         {
@@ -82,7 +85,8 @@ namespace API.Controllers
             return CreatedAtAction("GetPoll", new { id = poll.pollID }, poll);
         }
 
-        // DELETE: api/Poll/5
+        // delete de poll van het meegegeven id
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Poll>> DeletePoll(long id)
         {
@@ -97,6 +101,7 @@ namespace API.Controllers
 
             return poll;
         }
+        //controleert of de meegegeven pollid bestaat in de database
 
         private bool PollExists(long id)
         {

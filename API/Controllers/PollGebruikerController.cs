@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -20,14 +21,16 @@ namespace API.Controllers
             _context = context;
         }
 
-        // GET: api/PollGebruiker
+        // haalt alle pollGebruikers op 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PollGebruiker>>> GetPollGebruikers()
         {
             return await _context.PollGebruikers.Include(g => g.gebruiker).Include(p => p.poll).ToListAsync();
         }
 
-        // GET: api/PollGebruiker/5
+        //haalt de pollgebruiker met gebruiker en poll op met de meegegeven id
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<PollGebruiker>>> GetPollGebruiker(long id)
         {
@@ -41,7 +44,8 @@ namespace API.Controllers
             return pollGebruikers;
         }
 
-        // PUT: api/PollGebruiker/5
+        // past de pollgebruiker aan met het meegegeven id
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPollGebruiker(long id, PollGebruiker pollGebruiker)
         {
@@ -71,7 +75,8 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/PollGebruiker
+        //voegt een nieuwe pollgebruiker toe
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<PollGebruiker>> PostPollGebruiker(PollGebruiker pollGebruiker)
         {
@@ -81,22 +86,23 @@ namespace API.Controllers
             return CreatedAtAction("GetPollGebruiker", new { id = pollGebruiker.polGebruikerID }, pollGebruiker);
         }
 
-        // DELETE: api/PollGebruiker/5
+        // delete de pollgebruiker van het meegegeven pollid
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PollGebruiker>> DeletePollGebruiker(long id)
+        public ActionResult<IEnumerable<PollGebruiker>> DeletePollGebruiker(long id)
         {
-            var pollGebruiker = await _context.PollGebruikers.FindAsync(id);
-            if (pollGebruiker == null)
+            Console.WriteLine(id);
+            var pollGebruikers = _context.PollGebruikers.Where(p => p.pollID == id).ToList();
+
+            foreach (var pollGebruiker in pollGebruikers)
             {
-                return NotFound();
+                _context.PollGebruikers.Remove(pollGebruiker);
+                 _context.SaveChanges();
             }
 
-            _context.PollGebruikers.Remove(pollGebruiker);
-            await _context.SaveChangesAsync();
 
-            return pollGebruiker;
+            return pollGebruikers;
         }
-
+        //controleert of de meegegeven vriendid bestaat in de database
         private bool PollGebruikerExists(long id)
         {
             return _context.PollGebruikers.Any(e => e.polGebruikerID == id);

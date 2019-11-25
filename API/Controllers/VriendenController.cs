@@ -21,13 +21,14 @@ namespace API.Controllers
             _context = context;
         }
 
-        // GET: api/Vrienden
+        // haalt alle vrienden op 
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Vriend>>> GetVrienden()
         {
             return await _context.Vrienden.ToListAsync();
         }
+        //haalt de vriend op met de meegegeven id
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Vriend>>> GetVriend(long id)
@@ -41,7 +42,7 @@ namespace API.Controllers
 
             return vriend;
         }
-        // PUT: api/Vrienden/5
+        // past de vriend aan met het meegegeven id
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutVriend(long id, Vriend vriend)
@@ -72,7 +73,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Vrienden
+        //voegt een nieuwe vriend toe
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<Vriend>> PostVriend(Vriend vriend)
@@ -83,7 +84,7 @@ namespace API.Controllers
             return CreatedAtAction("GetVriend", new { id = vriend.vriendenID }, vriend);
         }
 
-        // DELETE: api/Vrienden/5
+        // delete de vriend van het meegegeven id
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Vriend>> DeleteVriend(long id)
@@ -99,7 +100,7 @@ namespace API.Controllers
 
             return vriend;
         }
-
+        //controleert of de meegegeven vriendid bestaat in de database
         private bool VriendExists(long id)
         {
             return _context.Vrienden.Any(e => e.vriendenID == id);
